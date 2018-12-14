@@ -13,7 +13,6 @@ public class vertex {
 	double y;
 	LinkedList<edge> adjEdges = new LinkedList<>();
 	Label text;
-	// TODO Add a label to mark the weight of the vertex
 	
 	public vertex(double x2, double y2) {
 		x = x2;
@@ -36,34 +35,15 @@ public class vertex {
 		adjEdges.add(e);
 	}
 	
-	public void updateX(double x2) {
-		c.setCenterX(x2);
-		for(edge e: adjEdges) {
-			if(e.l.getStartX() == x) {
-				e.l.setStartX(x2);
-			}else {
-				e.l.setEndX(x2);
-			}
+	public void deleteVertex(mainApp p) {
+		while (adjEdges.size() != 0) {
+			edge e = adjEdges.getLast();
+			e.removeEdge(p);
+			p.edges.remove(e);
+			adjEdges.remove(e);
 		}
-		x = x2;
-		text.setText("[ "+x+", "+y+"]");
-		text.setTranslateX(x-45);
-		text.setTranslateY(y-30);
-	}
-	
-	public void updateY(double y2) {
-		c.setCenterY(y2);
-		for(edge e: adjEdges) {
-			if(e.l.getStartY() == y) {
-				e.l.setStartY(y2);
-			}else {
-				e.l.setEndY(y2);
-			}
-		}
-		y = y2;
-
-		text.setText("[ "+x+", "+y+"]");
-		text.setTranslateX(x-45);
-		text.setTranslateY(y-30);
+		p.vertexGroup.getChildren().remove(c);
+		p.vertexGroup.getChildren().remove(text);
+		
 	}
 }

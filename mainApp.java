@@ -1,8 +1,6 @@
 package DijkstraVisualization;
 
 import java.util.LinkedList;
-import java.util.Random;
-
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -41,32 +39,6 @@ public class mainApp extends Application {
 		mainScene.setOnKeyPressed(e -> {
 			if (e.getCode() == KeyCode.SPACE) {
 				showMinimumSpanningTree();
-			} else if (e.getCode() == KeyCode.UP) {
-				for (vertex v : vertices) {
-					v.updateY(v.y * 0.9);
-				}
-			} else if (e.getCode() == KeyCode.DOWN) {
-				for (vertex v : vertices) {
-					v.updateY(v.y * 1.1);
-				}
-			} else if (e.getCode() == KeyCode.LEFT) {
-				for (vertex v : vertices) {
-					v.updateX(v.x * 0.9);
-				}
-			} else if (e.getCode() == KeyCode.RIGHT) {
-				for (vertex v : vertices) {
-					v.updateX(v.x * 1.1);
-				}
-			} else if (e.getCode() == KeyCode.R) {
-				Random rand = new Random();
-				for (vertex v : vertices) {
-					double r = rand.nextDouble() - 0.5;
-					System.out.println(r);
-					v.updateX(v.x + r * 4);
-					r = rand.nextDouble() - 0.5;
-					v.updateY(v.y + r * 4);
-
-				}
 			} else if (e.getCode() == KeyCode.BACK_SPACE) {
 				if (vertices.size() != 0) {
 					removeVertex(vertices.getLast());
@@ -83,13 +55,7 @@ public class mainApp extends Application {
 
 	private void removeVertex(vertex last) {
 		System.out.println("removing last");
-		while (last.adjEdges.size() != 0) {
-			edge e = last.adjEdges.getLast();
-			edgeGroup.getChildren().remove(e.l);
-			edges.remove(e);
-			last.adjEdges.remove(e);
-		}
-		vertexGroup.getChildren().remove(last.c);
+		last.deleteVertex(this);
 		vertices.remove(last);
 	}
 
@@ -107,7 +73,7 @@ public class mainApp extends Application {
 		v.showVertex(vertexGroup);
 		vertices.add(v);
 		updateEdges(v);
-		System.out.println("Number Of Vertices : " + vertices.size());
+		System.out.println("[V] :" + vertices.size());
 	}
 
 	private void updateEdges(vertex v) {
@@ -116,7 +82,7 @@ public class mainApp extends Application {
 				addEdge(u, v);
 			}
 		}
-		System.out.println("Total number of edges: " + edges.size());
+		System.out.println("[E] : " + edges.size());
 	}
 
 	private void addEdge(vertex u, vertex v) {

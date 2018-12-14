@@ -23,8 +23,6 @@ public class edge {
 		text = new Label(String.format("%.2f", weight));
 		text.setTranslateX(xcenter-45);
 		text.setTranslateY(ycenter-30);
-		
-//		System.out.println(weight);
 	}
 
 	public void showEdge(Group g) {
@@ -38,5 +36,11 @@ public class edge {
 		}else {
 			l.setStroke(Color.BLACK);			
 		}
+	}
+
+	public void removeEdge(mainApp p) {
+		// TODO Auto-generated method stub
+		p.edgeGroup.getChildren().remove(l);
+		p.edgeGroup.getChildren().remove(text);	
 	}
 }
